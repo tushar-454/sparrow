@@ -2,11 +2,9 @@ import { RxCross2 } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
 import LoginwithGoogle from '../Components/Shared/LoginwithGoogle';
 import Button from '../Components/UI/Button';
-import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
-import Select from '../Components/UI/Select';
 
-const Register = () => {
+const Login = () => {
   return (
     <main className='min-h-screen bg-white'>
       <div className='mx-auto w-full max-w-md p-6 pt-10'>
@@ -20,15 +18,15 @@ const Register = () => {
                 </span>
               </Link>
               <h1 className='block text-2xl font-bold text-jagger-950 dark:text-white'>
-                Register Now
+                Login Now
               </h1>
               <p className='mt-2 text-sm text-jagger-950 dark:text-gray-400'>
-                Have an account already?{' '}
+                Don&apos;t have an account yet?{' '}
                 <Link
                   className='font-medium text-jagger-700 decoration-2 hover:underline'
-                  to='/login'
+                  to='/register'
                 >
-                  Login here
+                  Register Now
                 </Link>
               </p>
             </div>
@@ -38,34 +36,15 @@ const Register = () => {
                 Or
               </div>
             </div>
-            {/* Register form will be here */}
+            {/* Login form will be here */}
             <form className='space-y-5'>
               <Input
-                displayName='Full Name:'
+                displayName='Mobile Number / Email:'
                 type='text'
-                id={'name'}
-                name='name'
-                placeholder={'Enter your full name'}
+                id={'emailOrPhone'}
+                name='emailOrPhone'
+                placeholder={'Enter your email or phone number'}
               />
-              <Input
-                displayName='Email Address:'
-                type='email'
-                id={'email'}
-                name='email'
-                placeholder={'Enter your email address'}
-              />
-              <Input
-                displayName='Mobile Number:'
-                type='tel'
-                id={'phone'}
-                name='phone'
-                placeholder={'Enter your phone number'}
-              />
-              <Select label={'Account Type'} id={'accountType'}>
-                <option value=''>Choose your account type</option>
-                <option value='Customer'>Customer</option>
-                <option value='Agent'>Agent</option>
-              </Select>
               <Input
                 displayName='Pin:'
                 type='password'
@@ -73,19 +52,7 @@ const Register = () => {
                 name='pin'
                 placeholder={'Enter your 4 digit pin'}
               />
-              <Input
-                displayName='Confirm Pin:'
-                type='password'
-                id={'confirmPin'}
-                name='confirmPin'
-                placeholder={'Confirm your pin'}
-              />
-              <Checkbox
-                displayName={'I agree all terms & conditions'}
-                type='checkbox'
-                id={'terms'}
-              />
-              <Button>Create an account</Button>
+              <Button>Login account</Button>
             </form>
           </div>
         </div>
@@ -94,4 +61,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
