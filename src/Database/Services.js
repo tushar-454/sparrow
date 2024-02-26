@@ -1,6 +1,5 @@
 import billpay from '../Assets/billpay.svg';
 import cashout from '../Assets/cashout.svg';
-import mobilerecharge from '../Assets/mobilerecharge.svg';
 import sendmoney from '../Assets/sendmoney.svg';
 const userServices = [
   {
@@ -13,11 +12,6 @@ const userServices = [
     name: 'Cash Out',
     image: cashout,
   },
-  {
-    id: 3,
-    name: 'Mobile Recharge',
-    image: mobilerecharge,
-  },
 ];
 const paymentServices = [
   {
@@ -26,5 +20,12 @@ const paymentServices = [
     image: billpay,
   },
 ];
+const agentServices = [
+  {
+    id: 1,
+    name: 'Cash In',
+    image: cashout,
+  },
+];
 
-export { paymentServices, userServices };
+export { agentServices, paymentServices, userServices };
