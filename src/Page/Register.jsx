@@ -1,6 +1,10 @@
 import { RxCross2 } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
 import LoginwithGoogle from '../Components/Shared/LoginwithGoogle';
+import Button from '../Components/UI/Button';
+import Checkbox from '../Components/UI/Checkbox';
+import Input from '../Components/UI/Input';
+import Select from '../Components/UI/Select';
 
 const Register = () => {
   return (
@@ -34,6 +38,55 @@ const Register = () => {
                 Or
               </div>
             </div>
+            {/* Register form will be here */}
+            <form className='space-y-5'>
+              <Input
+                displayName='Full Name:'
+                type='text'
+                id={'name'}
+                name='name'
+                placeholder={'Enter your full name'}
+              />
+              <Input
+                displayName='Email Address:'
+                type='email'
+                id={'email'}
+                name='email'
+                placeholder={'Enter your email address'}
+              />
+              <Input
+                displayName='Mobile Number:'
+                type='tel'
+                id={'phone'}
+                name='phone'
+                placeholder={'Enter your phone number'}
+              />
+              <Select label={'Account Type'} id={'accountType'}>
+                <option value=''>Choose your account type</option>
+                <option value='Customer'>Customer</option>
+                <option value='Agent'>Agent</option>
+              </Select>
+              <Input
+                displayName='Pin:'
+                type='password'
+                id={'pin'}
+                name='pin'
+                placeholder={'Enter your 4 digit pin'}
+              />
+              <Input
+                displayName='Confirm Pin:'
+                type='password'
+                id={'confirmPin'}
+                name='confirmPin'
+                placeholder={'Confirm your pin'}
+              />
+              <Checkbox
+                displayName={'I agree all terms & conditions'}
+                type='checkbox'
+                id={'terms'}
+              />
+              <Button>Create an account</Button>
+            </form>
           </div>
         </div>
       </div>
