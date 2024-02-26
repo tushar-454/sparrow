@@ -7,7 +7,7 @@ import Container from './Container';
 
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
-  const user = true;
+  const user = null;
   return (
     <header className='bg-apple-400'>
       <Container>
@@ -31,7 +31,7 @@ const Header = () => {
           ) : (
             <>
               {/* create an account button */}
-              <LinkBtn to={'/'}>Create an Account</LinkBtn>
+              <LinkBtn to={'/register'}>Create an Account</LinkBtn>
             </>
           )}
         </div>
