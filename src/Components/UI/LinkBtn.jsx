@@ -5,7 +5,7 @@ const LinkBtn = ({ to, children }) => {
   return (
     <Link
       to={to}
-      className='rounded-lg bg-jagger-800 px-5 py-3 font-semibold text-white transition hover:bg-jagger-900 active:scale-[0.98]'
+      className='rounded-lg bg-white px-5 py-3 font-semibold text-apple-700 transition hover:bg-apple-50 active:scale-[0.98] active:bg-apple-100'
     >
       {children}
     </Link>
