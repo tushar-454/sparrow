@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { HiOutlineMenu } from 'react-icons/hi';
+import Logo from '../Header/Logo';
+import NavItems from '../Header/NavItems';
 import LinkBtn from '../UI/LinkBtn';
-import Logo from '../header/Logo';
-import NavItems from '../header/NavItems';
 import Container from './Container';
 
 const Header = () => {
