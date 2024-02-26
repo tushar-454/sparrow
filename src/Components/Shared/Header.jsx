@@ -16,12 +16,14 @@ const Header = () => {
           {/* logo  */}
           <Logo />
           {/* nav show button */}
-          <div className='absolute right-0 top-4 block md:hidden'>
-            <HiOutlineMenu
-              onClick={() => setShowNav(true)}
-              className='text-6xl text-white'
-            />
-          </div>
+          {user && (
+            <div className='absolute right-0 top-4 block md:hidden'>
+              <HiOutlineMenu
+                onClick={() => setShowNav(true)}
+                className='text-6xl text-white'
+              />
+            </div>
+          )}
           {/* show menu or create an account button based on user login status */}
           {user ? (
             <>
