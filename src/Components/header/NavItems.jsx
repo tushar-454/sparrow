@@ -1,5 +1,7 @@
 import PropType from 'prop-types';
 import { IoCloseOutline } from 'react-icons/io5';
+
+import navItemsData from '../../Database/navItemsData';
 import NavItem from './NavItem';
 import UserInfo from './UserInfo';
 
@@ -20,8 +22,8 @@ const NavItems = ({ showNav, showNavFunc }) => {
       {/* nav items */}
       <nav className='w-full md:w-auto'>
         <ul className='flex w-full flex-col items-center justify-center gap-4 md:w-auto md:flex-row'>
-          {[{}, {}, {}, {}]?.map((navitem, index) => (
-            <NavItem key={index} navitem={navitem} />
+          {navItemsData?.map((navitem, index) => (
+            <NavItem key={index} navitem={navitem} showNavFunc={showNavFunc} />
           ))}
         </ul>
       </nav>

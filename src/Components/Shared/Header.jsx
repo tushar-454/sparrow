@@ -7,7 +7,7 @@ import Container from './Container';
 
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
-  const user = null;
+  const user = true;
   return (
     <header className='bg-apple-400'>
       <Container>

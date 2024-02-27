@@ -1,16 +1,20 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const NavItem = () => {
+const NavItem = ({ navitem, showNavFunc }) => {
   return (
-    <li className='w-full md:w-auto'>
+    <li onClick={() => showNavFunc(false)} className='w-full md:w-auto'>
       <Link
-        to={'/'}
-        className='block w-full rounded-full bg-gradient-to-l from-apple-500 to-apple-700 px-6 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:from-apple-600 hover:to-apple-800 md:inline-block md:w-auto'
+        to={navitem.path ?? '/'}
+        className={`block w-full rounded-full bg-gradient-to-l from-apple-500 to-apple-700 px-6 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:from-apple-600 hover:to-apple-800 md:inline-block md:w-auto`}
       >
-        Nav Item
+        {navitem.name ?? 'Nav Item'}
       </Link>
     </li>
   );
 };
-
+NavItem.propTypes = {
+  navitem: PropTypes.object.isRequired,
+  showNavFunc: PropTypes.func.isRequired,
+};
 export default NavItem;
