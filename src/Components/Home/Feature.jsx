@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import sendmoney from '../../assets/sendmoney.svg';
+import sendmoney from '../../Assets/sendmoney.svg';
 
 const Feature = ({ feature }) => {
   return (
