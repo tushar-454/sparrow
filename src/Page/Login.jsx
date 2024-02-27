@@ -61,7 +61,7 @@ const Login = () => {
                 type='password'
                 id={'pin'}
                 name='pin'
-                placeholder={'Enter your 4 digit pin'}
+                placeholder={'Enter your 5 digit pin'}
                 isGroup={true}
                 register={{
                   ...register('pin', { required: true }),

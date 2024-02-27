@@ -1,9 +1,13 @@
+import useAuth from '../../Hook/useAuth';
+
 const UserInfo = () => {
+  const user = useAuth();
   return (
     <div>
       <div className='h-12 w-12'>
         <img
           src={
+            user?.image ??
             'https://img001.prntscr.com/file/img001/tVyVFqSNTaWsJphP1ef31A.png'
           }
           alt='user image'

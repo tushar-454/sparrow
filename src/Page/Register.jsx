@@ -77,6 +77,15 @@ const Register = () => {
                 register={{ ...register('phone', { required: true }) }}
                 error={errors.phone && errors.phone.message}
               />
+              <Input
+                displayName='NID No:'
+                type='number'
+                id={'nidNo'}
+                name='nidNo'
+                placeholder={'Enter your nidNo number'}
+                register={{ ...register('nidNo', { required: true }) }}
+                error={errors.nidNo && errors.nidNo.message}
+              />
               <Select
                 label={'Account Type'}
                 id={'accountType'}
@@ -92,7 +101,7 @@ const Register = () => {
                 type='password'
                 id={'pin'}
                 name='pin'
-                placeholder={'Enter your 4 digit pin'}
+                placeholder={'Enter your 5 digit pin'}
                 register={{
                   ...register('pin', { required: true }),
                 }}

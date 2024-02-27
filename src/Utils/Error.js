@@ -26,10 +26,10 @@ const loginError = (values) => {
       type: 'required',
       message: 'Pin is required',
     };
-  } else if (!/^\d{4}$/.test(values.pin)) {
+  } else if (!/^\d{5}$/.test(values.pin)) {
     errors.pin = {
       type: 'invalid',
-      message: 'Pin must be 4 digit',
+      message: 'Pin must be 5 digit',
     };
   }
   return { errors, values };
@@ -83,6 +83,18 @@ const registerError = (values) => {
       message: 'Phone is invalid',
     };
   }
+  // nid validation
+  if (!values.nidNo) {
+    errors.nidNo = {
+      type: 'required',
+      message: 'NID is required',
+    };
+  } else if (values.nidNo.length !== 10 && values.nidNo.length !== 13) {
+    errors.nidNo = {
+      type: 'invalid',
+      message: 'NID must be 10 or 13 digit',
+    };
+  }
   // account type validation
   if (!values.accountType) {
     errors.accountType = {
@@ -96,10 +108,10 @@ const registerError = (values) => {
       type: 'required',
       message: 'Pin is required',
     };
-  } else if (!/^\d{4}$/.test(values.pin)) {
+  } else if (!/^\d{5}$/.test(values.pin)) {
     errors.pin = {
       type: 'invalid',
-      message: 'Pin must be 4 digit',
+      message: 'Pin must be 5 digit',
     };
   }
   // confirm pin validation
@@ -150,10 +162,10 @@ const servicesError = (values) => {
       type: 'required',
       message: 'Amount is required',
     };
-  } else if (values.amount < 20) {
+  } else if (values.amount < 50) {
     errors.amount = {
       type: 'invalid',
-      message: 'Amount must be at least 20 taka',
+      message: 'Amount must be at least 50 taka',
     };
   }
   // receiver phone validation
@@ -179,10 +191,10 @@ const servicesError = (values) => {
       type: 'required',
       message: 'Pin is required',
     };
-  } else if (!/^\d{4}$/.test(values.pin)) {
+  } else if (!/^\d{5}$/.test(values.pin)) {
     errors.pin = {
       type: 'invalid',
-      message: 'Pin must be 4 digit',
+      message: 'Pin must be 5 digit',
     };
   }
   return { errors, values };

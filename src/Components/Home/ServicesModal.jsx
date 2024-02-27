@@ -57,7 +57,7 @@ const ServicesModal = ({ service, setSelectedService }) => {
           type={'password'}
           name={'pin'}
           id={'pin'}
-          placeholder={'Enter your 4 digit pin'}
+          placeholder={'Enter your 5 digit pin'}
           register={{ ...register('pin', { required: true }) }}
           error={errors.pin && errors.pin.message}
         />
