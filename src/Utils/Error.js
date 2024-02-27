@@ -13,7 +13,7 @@ const loginError = (values) => {
     };
   } else if (
     !/\S+@\S+\.\S+/.test(values.emailOrPhone) &&
-    !/^\d{10}$/.test(values.emailOrPhone)
+    !/^\d{11}$/.test(values.emailOrPhone)
   ) {
     errors.emailOrPhone = {
       type: 'invalid',

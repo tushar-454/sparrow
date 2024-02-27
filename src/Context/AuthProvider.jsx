@@ -1,15 +1,22 @@
 import PropType from 'prop-types';
-import { createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
-  // const userInfo = null;
-  const userInfo = {
-    name: 'John Doe',
-    email: 'Hey@gamil.com',
-    accountType: 'Admin',
+  const [userInfo, setUserInfo] = useState(null);
+  const authInfo = {
+    userInfo,
+    setUserInfo,
   };
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('userInfo'));
+    if (user) {
+      setUserInfo(user);
+    } else {
+      setUserInfo(null);
+    }
+  }, []);
   return (
-    <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
 AuthProvider.propTypes = {

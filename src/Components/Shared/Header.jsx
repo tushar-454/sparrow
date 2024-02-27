@@ -8,7 +8,7 @@ import Container from './Container';
 
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
-  const user = useAuth();
+  const { userInfo } = useAuth();
   return (
     <header className='bg-apple-400'>
       <Container>
@@ -17,7 +17,7 @@ const Header = () => {
           {/* logo  */}
           <Logo />
           {/* nav show button */}
-          {user && (
+          {userInfo && (
             <div className='absolute right-0 top-4 block md:hidden'>
               <HiOutlineMenu
                 onClick={() => setShowNav(true)}
@@ -26,7 +26,7 @@ const Header = () => {
             </div>
           )}
           {/* show menu or create an account button based on user login status */}
-          {user ? (
+          {userInfo ? (
             <>
               {/* nav items with logged in user info */}
               <NavItems showNav={showNav} showNavFunc={setShowNav} />

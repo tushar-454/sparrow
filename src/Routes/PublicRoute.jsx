@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../Hook/useAuth';
 const PublicRoute = ({ children }) => {
-  const user = useAuth();
-  if (user) return <Navigate to='/' />;
+  const { userInfo } = useAuth();
+  if (userInfo) return <Navigate to='/' />;
   return children;
 };
 PublicRoute.propTypes = {

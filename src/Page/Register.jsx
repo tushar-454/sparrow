@@ -1,22 +1,49 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { RxCross2 } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../Components/Header/Logo';
 import Button from '../Components/UI/Button';
 import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
 import Select from '../Components/UI/Select';
+import useAxios from '../Hook/useAxios';
 import { registerError } from '../Utils/Error';
 
 const Register = () => {
+  const axios = useAxios();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'all', resolver: registerError });
-  const handleRegisterForm = (data) => {
-    console.log(data);
+  const handleRegisterForm = async (data) => {
+    try {
+      const { name, email, phone, nidNo, pin, accountType } = data;
+      // save user info
+      const userInfoRes = await axios.post('/user/create', {
+        name,
+        email,
+        phone,
+        pin,
+        role: accountType,
+        nidNo,
+      });
+      // create an account
+      const userAccountRes = await axios.post('/account/create', {
+        name,
+        email,
+        phone,
+        role: accountType,
+      });
+      if (userInfoRes.data.success && userAccountRes.data.success) {
+        toast.success('Account created successfully');
+        navigate('/login');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <main className='min-h-screen bg-white'>

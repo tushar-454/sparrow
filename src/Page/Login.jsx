@@ -1,19 +1,40 @@
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { RxCross2 } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
 import Logo from '../Components/Header/Logo';
 import Button from '../Components/UI/Button';
 import Input from '../Components/UI/Input';
+import useAuth from '../Hook/useAuth';
+import useAxios from '../Hook/useAxios';
 import { loginError } from '../Utils/Error';
 const Login = () => {
+  const axios = useAxios();
+  const { setUserInfo } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'all', resolver: loginError });
   // handle login form submit
-  const handleLoginForm = (data) => {
-    console.log(data);
+  const handleLoginForm = async (data) => {
+    try {
+      // login request
+      const loginRes = await axios.post('/account/login', data);
+      // token request
+      await axios.post('/jwt/create', {
+        emailOrPhone: data.emailOrPhone,
+      });
+      if (loginRes.data.success) {
+        setUserInfo(loginRes.data.data);
+        localStorage.setItem('userInfo', JSON.stringify(loginRes.data.data));
+        toast.success(loginRes.data.message);
+      } else {
+        toast.error(loginRes.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <main className='min-h-screen bg-white'>
