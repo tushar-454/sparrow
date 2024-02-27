@@ -4,6 +4,8 @@ import Home from '../Page/Home';
 import Login from '../Page/Login';
 import Register from '../Page/Register';
 import Transactions from '../Page/Transactions';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 const routes = createBrowserRouter([
   {
@@ -12,21 +14,37 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'transactions',
-        element: <Transactions />,
+        element: (
+          <PrivateRoute>
+            <Transactions />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: '/register',
-    element: <Register />,
+    element: (
+      <PublicRoute>
+        <Register />
+      </PublicRoute>
+    ),
   },
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
 ]);
 
