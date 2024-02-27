@@ -3,7 +3,9 @@ const UserInfo = () => {
     <div>
       <div className='h-12 w-12'>
         <img
-          src={'https://cutt.ly/mwNWLlOo'}
+          src={
+            'https://img001.prntscr.com/file/img001/tVyVFqSNTaWsJphP1ef31A.png'
+          }
           alt='user image'
           className='h-full w-full cursor-pointer rounded-full object-cover outline-4 outline-apple-900 transition-all hover:outline-double'
         />

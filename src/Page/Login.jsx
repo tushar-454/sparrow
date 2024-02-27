@@ -1,10 +1,20 @@
+import { useForm } from 'react-hook-form';
 import { RxCross2 } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
 import Logo from '../Components/Header/Logo';
 import Button from '../Components/UI/Button';
 import Input from '../Components/UI/Input';
-
+import { loginError } from '../Utils/Error';
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: 'all', resolver: loginError });
+  // handle login form submit
+  const handleLoginForm = (data) => {
+    console.log(data);
+  };
   return (
     <main className='min-h-screen bg-white'>
       <div className='mx-auto w-full max-w-md p-6 pt-10'>
@@ -33,13 +43,18 @@ const Login = () => {
               </p>
             </div>
             {/* Login form will be here */}
-            <form className='mt-10 space-y-5'>
+            <form
+              className='mt-10 space-y-5'
+              onSubmit={handleSubmit(handleLoginForm)}
+            >
               <Input
                 displayName='Mobile Number / Email:'
                 type='text'
                 id={'emailOrPhone'}
                 name='emailOrPhone'
                 placeholder={'Enter your email or phone number'}
+                register={{ ...register('emailOrPhone', { required: true }) }}
+                error={errors.emailOrPhone && errors.emailOrPhone.message}
               />
               <Input
                 displayName='Pin:'
@@ -48,6 +63,10 @@ const Login = () => {
                 name='pin'
                 placeholder={'Enter your 4 digit pin'}
                 isGroup={true}
+                register={{
+                  ...register('pin', { required: true }),
+                }}
+                error={errors.pin && errors.pin.message}
               />
               <Button>Login account</Button>
             </form>

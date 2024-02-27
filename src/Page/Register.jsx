@@ -1,3 +1,5 @@
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { RxCross2 } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
 import Logo from '../Components/Header/Logo';
@@ -5,8 +7,17 @@ import Button from '../Components/UI/Button';
 import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
 import Select from '../Components/UI/Select';
+import { registerError } from '../Utils/Error';
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: 'all', resolver: registerError });
+  const handleRegisterForm = (data) => {
+    console.log(data);
+  };
   return (
     <main className='min-h-screen bg-white'>
       <div className='mx-auto w-full max-w-md p-6 pt-10'>
@@ -35,13 +46,18 @@ const Register = () => {
               </p>
             </div>
             {/* Register form will be here */}
-            <form className='mt-10 space-y-5'>
+            <form
+              className='mt-10 space-y-5'
+              onSubmit={handleSubmit(handleRegisterForm)}
+            >
               <Input
                 displayName='Full Name:'
                 type='text'
                 id={'name'}
                 name='name'
                 placeholder={'Enter your full name'}
+                register={{ ...register('name', { required: true }) }}
+                error={errors.name && errors.name.message}
               />
               <Input
                 displayName='Email Address:'
@@ -49,6 +65,8 @@ const Register = () => {
                 id={'email'}
                 name='email'
                 placeholder={'Enter your email address'}
+                register={{ ...register('email', { required: true }) }}
+                error={errors.email && errors.email.message}
               />
               <Input
                 displayName='Mobile Number:'
@@ -56,8 +74,15 @@ const Register = () => {
                 id={'phone'}
                 name='phone'
                 placeholder={'Enter your phone number'}
+                register={{ ...register('phone', { required: true }) }}
+                error={errors.phone && errors.phone.message}
               />
-              <Select label={'Account Type'} id={'accountType'}>
+              <Select
+                label={'Account Type'}
+                id={'accountType'}
+                register={{ ...register('accountType', { required: true }) }}
+                error={errors.accountType && errors.accountType.message}
+              >
                 <option value=''>Choose your account type</option>
                 <option value='Customer'>Customer</option>
                 <option value='Agent'>Agent</option>
@@ -68,6 +93,10 @@ const Register = () => {
                 id={'pin'}
                 name='pin'
                 placeholder={'Enter your 4 digit pin'}
+                register={{
+                  ...register('pin', { required: true }),
+                }}
+                error={errors.pin && errors.pin.message}
               />
               <Input
                 displayName='Confirm Pin:'
@@ -75,11 +104,20 @@ const Register = () => {
                 id={'confirmPin'}
                 name='confirmPin'
                 placeholder={'Confirm your pin'}
+                register={{
+                  ...register('confirmPin', { required: true }),
+                }}
+                error={errors.confirmPin && errors.confirmPin.message}
               />
               <Checkbox
                 displayName={'I agree all terms & conditions'}
                 type='checkbox'
                 id={'terms'}
+                name='terms'
+                register={{
+                  ...register('terms', { required: true }),
+                }}
+                error={errors.terms && toast.error(errors.terms.message)}
               />
               <Button>Create an account</Button>
             </form>

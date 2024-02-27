@@ -33,7 +33,7 @@ const Input = ({
           {...rest}
           {...register}
           id={id}
-          className='block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition-all focus:border-apple-500 focus:bg-apple-50'
+          className={`block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition-all focus:border-apple-500 focus:bg-apple-50 ${error && 'border-red-400 bg-red-50'}`}
         />
         {error && (
           <div className='pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3'>

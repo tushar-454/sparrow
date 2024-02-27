@@ -14,7 +14,7 @@ const Select = ({ label, id, register, error, children, ...rest }) => {
           {...register}
           {...rest}
           id={id}
-          className='block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition-all focus:border-apple-500 focus:bg-apple-50'
+          className={`block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none transition-all focus:border-apple-500 focus:bg-apple-50 ${error && 'border-red-400 bg-red-50'}`}
         >
           {children}
         </select>
