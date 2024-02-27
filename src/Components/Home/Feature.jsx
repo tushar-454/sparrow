@@ -4,7 +4,10 @@ import sendmoney from '../../Assets/sendmoney.svg';
 const Feature = ({ feature, setSelectedService }) => {
   return (
     <div
-      onClick={() => setSelectedService(feature?.name)}
+      onClick={() => {
+        window.scrollTo(0, 0);
+        setSelectedService(feature?.name);
+      }}
       className='flex w-24 cursor-pointer flex-col items-center justify-center gap-2'
     >
       <img
