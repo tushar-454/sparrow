@@ -1,6 +1,6 @@
 import { RxCross2 } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
-import LoginwithGoogle from '../Components/Shared/LoginwithGoogle';
+import Logo from '../Components/Header/Logo';
 import Button from '../Components/UI/Button';
 import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
@@ -19,6 +19,8 @@ const Register = () => {
                   <RxCross2 />
                 </span>
               </Link>
+              {/* MFS logo  */}
+              <Logo center={true} />
               <h1 className='block text-2xl font-bold text-jagger-950 dark:text-white'>
                 Register Now
               </h1>
@@ -32,14 +34,8 @@ const Register = () => {
                 </Link>
               </p>
             </div>
-            <div className='mt-5'>
-              <LoginwithGoogle />
-              <div className='flex items-center py-3 text-xs uppercase text-gray-400 before:me-6 before:flex-[1_1_0%] before:border-t before:border-gray-200 after:ms-6 after:flex-[1_1_0%] after:border-t after:border-gray-200'>
-                Or
-              </div>
-            </div>
             {/* Register form will be here */}
-            <form className='space-y-5'>
+            <form className='mt-10 space-y-5'>
               <Input
                 displayName='Full Name:'
                 type='text'
