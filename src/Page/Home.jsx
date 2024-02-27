@@ -3,8 +3,9 @@ import AgentHome from '../Components/Home/AgentHome';
 import CustomerHome from '../Components/Home/CustomerHome';
 import Container from '../Components/Shared/Container';
 import GradientText from '../Components/Shared/GradientText';
+import useAuth from '../Hook/useAuth';
 const Home = () => {
-  const user = { accountType: 'Customer' };
+  const user = useAuth();
   const account = {};
   return (
     <main className='mb-10'>

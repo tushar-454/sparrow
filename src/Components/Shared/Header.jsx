@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { HiOutlineMenu } from 'react-icons/hi';
+import useAuth from '../../Hook/useAuth';
 import Logo from '../Header/Logo';
 import NavItems from '../Header/NavItems';
 import LinkBtn from '../UI/LinkBtn';
@@ -7,7 +8,7 @@ import Container from './Container';
 
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
-  const user = true;
+  const user = useAuth();
   return (
     <header className='bg-apple-400'>
       <Container>

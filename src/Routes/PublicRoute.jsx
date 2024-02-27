@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
+import useAuth from '../Hook/useAuth';
 const PublicRoute = ({ children }) => {
-  const user = true;
+  const user = useAuth();
   if (user) return <Navigate to='/' />;
   return children;
 };

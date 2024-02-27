@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { PiCurrencyCircleDollarFill } from 'react-icons/pi';
+import useAuth from '../../Hook/useAuth';
 import Tag from '../UI/Tag';
 const initialBlur = {
   company: true,
@@ -9,9 +10,7 @@ const initialBlur = {
 };
 const BalanceInformationCard = ({ title, accountInfo }) => {
   const [blur, setBlur] = useState({ ...initialBlur });
-  const userInfo = {
-    accountType: 'Admin',
-  };
+  const userInfo = useAuth();
   return (
     <div
       onMouseLeave={() => setBlur({ ...initialBlur })}

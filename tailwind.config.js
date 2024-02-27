@@ -32,6 +32,9 @@ export default {
           950: '#36135a',
         },
       },
+      boxShadow: {
+        boxTransparentShadow: '0px 0px 0 1000px #00000070',
+      },
     },
   },
   plugins: [],
