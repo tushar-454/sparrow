@@ -13,7 +13,11 @@ const routes = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        index: true,
+        path: 'home',
+        element: <PublicRoute>Hello</PublicRoute>,
+      },
+      {
+        index: '/',
         element: (
           <PrivateRoute>
             <Home />

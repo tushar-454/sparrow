@@ -22,7 +22,7 @@ const Login = () => {
           <div className='p-4 sm:p-7'>
             <div className='text-center'>
               {/* back to home button  */}
-              <Link to={'/'}>
+              <Link to={'/home'}>
                 <span className='text-sun-900 absolute -right-0 -top-0 flex h-10 w-10 cursor-pointer items-center justify-center rounded-bl-lg rounded-tr-lg bg-apple-100 text-2xl transition-all hover:bg-apple-200 active:bg-apple-300 active:text-white'>
                   <RxCross2 />
                 </span>

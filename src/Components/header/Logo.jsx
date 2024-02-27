@@ -4,7 +4,7 @@ import logo from '../../Assets/logo.webp';
 const Logo = ({ center = false }) => {
   return (
     <div className={`h-24 w-24 ${center && 'flex w-auto justify-center'}`}>
-      <Link to={'/'}>
+      <Link to={'/home'}>
         <img src={logo} alt='logo' className='h-full w-full rounded-full' />
       </Link>
     </div>
