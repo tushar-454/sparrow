@@ -2,15 +2,14 @@ import AdminHome from '../Components/Home/AdminHome';
 import AgentHome from '../Components/Home/AgentHome';
 import CustomerHome from '../Components/Home/CustomerHome';
 import Container from '../Components/Shared/Container';
+import GradientText from '../Components/Shared/GradientText';
 const Home = () => {
   const user = { accountType: 'Admin' };
   const account = {};
   return (
     <main className='mb-10'>
       <Container>
-        <h1 className='mt-8 bg-gradient-to-br from-apple-500 to-jagger-950 bg-clip-text text-center text-5xl font-bold text-transparent'>
-          Welcome to Sparrow!
-        </h1>
+        <GradientText isHead={true}>Welcome to Sparrow!</GradientText>
         {user?.accountType === 'Admin' && (
           <AdminHome user={user} account={account} />
         )}
