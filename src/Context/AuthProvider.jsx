@@ -3,12 +3,15 @@ import { createContext, useEffect, useState } from 'react';
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
   const authInfo = {
     userInfo,
     setUserInfo,
+    loading,
+    setLoading,
   };
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('userInfo'));
+    const user = JSON.parse(sessionStorage.getItem('userInfo'));
     if (user) {
       setUserInfo(user);
     } else {

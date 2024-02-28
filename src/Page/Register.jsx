@@ -7,12 +7,14 @@ import Button from '../Components/UI/Button';
 import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
 import Select from '../Components/UI/Select';
+import useAuth from '../Hook/useAuth';
 import useAxios from '../Hook/useAxios';
 import { registerError } from '../Utils/Error';
 
 const Register = () => {
   const axios = useAxios();
   const navigate = useNavigate();
+  const { loading, setLoading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -20,6 +22,7 @@ const Register = () => {
   } = useForm({ mode: 'all', resolver: registerError });
   const handleRegisterForm = async (data) => {
     try {
+      setLoading(true);
       const { name, email, phone, nidNo, pin, accountType } = data;
       // save user info
       const userInfoRes = await axios.post('/user/create', {
@@ -42,7 +45,10 @@ const Register = () => {
         navigate('/login');
       }
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -155,7 +161,9 @@ const Register = () => {
                 }}
                 error={errors.terms && toast.error(errors.terms.message)}
               />
-              <Button>Create an account</Button>
+              <Button loading={loading}>
+                {loading ? 'Creating...' : 'Create an account'}
+              </Button>
             </form>
           </div>
         </div>

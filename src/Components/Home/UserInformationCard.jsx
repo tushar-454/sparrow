@@ -9,7 +9,10 @@ const UserInformationCard = ({ title, userInfo }) => {
       <div>
         <div className='flex items-center gap-2'>
           <img
-            src={userInfo?.image ?? 'https://cutt.ly/NwNTEWRr'}
+            src={
+              userInfo?.image ??
+              '	https://img001.prntscr.com/file/img001/tVyVFqSNTaWsJphP1ef31A.png'
+            }
             alt='user image'
             className='h-16 w-16 rounded-full border-2 border-apple-500 object-cover'
           />
@@ -25,12 +28,14 @@ const UserInformationCard = ({ title, userInfo }) => {
           </p>
         </div>
         <p className='mt-5 flex flex-col gap-2 sm:flex-row'>
-          <Tag>{userInfo?.accountType ?? 'Pending'}</Tag>
+          <Tag>{userInfo?.isActiveAccount ? 'Activated' : 'Pending'}</Tag>
           <Tag>NID: {userInfo?.nidNo ?? '048348943533'}</Tag>
         </p>
-        <p className='mt-4'>
-          <Tag>Requested</Tag>
-        </p>
+        {userInfo?.isActiveAccount || (
+          <p className='mt-4'>
+            <Tag>Request for Active</Tag>
+          </p>
+        )}
       </div>
     </div>
   );

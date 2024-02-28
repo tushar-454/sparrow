@@ -10,7 +10,7 @@ const initialBlur = {
 };
 const BalanceInformationCard = ({ title, accountInfo }) => {
   const [blur, setBlur] = useState({ ...initialBlur });
-  const userInfo = useAuth();
+  const { userInfo } = useAuth();
   return (
     <div
       onMouseLeave={() => setBlur({ ...initialBlur })}
@@ -111,7 +111,7 @@ const BalanceInformationCard = ({ title, accountInfo }) => {
           </p>
         </div>
       )}
-      {userInfo?.accountType === 'Agent' && (
+      {userInfo?.role === 'Agent' && (
         <div>
           <p className='mt-5 flex flex-col gap-2'>
             <Tag>Request for Balance</Tag>

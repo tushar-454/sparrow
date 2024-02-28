@@ -10,7 +10,7 @@ import useAxios from '../Hook/useAxios';
 import { loginError } from '../Utils/Error';
 const Login = () => {
   const axios = useAxios();
-  const { setUserInfo } = useAuth();
+  const { setUserInfo, loading, setLoading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -19,21 +19,34 @@ const Login = () => {
   // handle login form submit
   const handleLoginForm = async (data) => {
     try {
+      setLoading(true);
       // login request
       const loginRes = await axios.post('/account/login', data);
+      // check allready one device login
+      if (loginRes.data.data.isOneDeviceLoggedIn) {
+        setLoading(false);
+        return toast.error('You are allready logged in one device');
+      }
       // token request
       await axios.post('/jwt/create', {
         emailOrPhone: data.emailOrPhone,
       });
+      // save user allready one device login
+      await axios.patch(`/user/updateUserOneDeviceLogin/${data.emailOrPhone}`, {
+        isOneDeviceLoggedIn: true,
+      });
       if (loginRes.data.success) {
         setUserInfo(loginRes.data.data);
-        localStorage.setItem('userInfo', JSON.stringify(loginRes.data.data));
+        sessionStorage.setItem('userInfo', JSON.stringify(loginRes.data.data));
         toast.success(loginRes.data.message);
       } else {
         toast.error(loginRes.data.message);
       }
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -89,7 +102,9 @@ const Login = () => {
                 }}
                 error={errors.pin && errors.pin.message}
               />
-              <Button>Login account</Button>
+              <Button loading={loading}>
+                {loading ? 'Logging...' : 'Login account'}
+              </Button>
             </form>
           </div>
         </div>
