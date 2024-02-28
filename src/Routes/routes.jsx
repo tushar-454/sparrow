@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from '../Layout/Root';
 import Home from '../Page/Home';
+import Landing from '../Page/Landing';
 import Login from '../Page/Login';
 import Register from '../Page/Register';
 import Transactions from '../Page/Transactions';
@@ -14,7 +15,11 @@ const routes = createBrowserRouter([
     children: [
       {
         path: 'home',
-        element: <PublicRoute>Hello</PublicRoute>,
+        element: (
+          <PublicRoute>
+            <Landing />
+          </PublicRoute>
+        ),
       },
       {
         index: '/',
