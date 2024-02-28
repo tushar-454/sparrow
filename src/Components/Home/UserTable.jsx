@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import Select from '../UI/Select';
 import Tag from '../UI/Tag';
 
-const UserTable = () => {
+const UserTable = ({ allUsers, isError, isLoading, searchUsers }) => {
   return (
     <table className='w-full'>
       <thead>
@@ -21,41 +22,109 @@ const UserTable = () => {
         </tr>
       </thead>
       <tbody>
-        {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]?.map(
-          (user, index) => (
-            <tr key={index} className='transition-all hover:bg-green-50'>
-              <td className='text-nowrap border p-2'>John Doe</td>
-              <td className='text-nowrap border p-2'>Jhondou@gmail.com</td>
-              <td className='text-nowrap border p-2'>Admin</td>
-              <td className='text-nowrap border p-2'>+0590834370</td>
-              <td className='text-nowrap border p-2 text-center'>
-                <Select style={{ minWidth: '8rem' }}>
-                  <option value='Pending' className='text-nowrap'>
-                    Pending
-                  </option>
-                  <option value='Active' className='text-nowrap'>
-                    Active
-                  </option>
-                  <option value='Block' className='text-nowrap'>
-                    Block
-                  </option>
-                </Select>
-              </td>
-              <td className='text-nowrap border p-2 text-center'>
-                <Tag>Pending</Tag>
-              </td>
-              <td className='text-nowrap border p-2 text-center'>
-                <Tag>Pending</Tag>
-              </td>
-              <td className='text-nowrap border p-2 text-center'>
-                <Tag style={{ background: '#FF0000' }}>Delete</Tag>
-              </td>
-            </tr>
-          ),
+        {!searchUsers ? (
+          <>
+            {!isError &&
+              !isLoading &&
+              allUsers?.map((user, index) => (
+                <tr key={index} className='transition-all hover:bg-green-50'>
+                  <td className='text-nowrap border p-2'>{user?.name}</td>
+                  <td className='text-nowrap border p-2'>{user?.email}</td>
+                  <td className='text-nowrap border p-2'>{user?.role}</td>
+                  <td className='text-nowrap border p-2'>{user?.phone}</td>
+                  <td className='text-nowrap border p-2 text-center'>
+                    <Select style={{ minWidth: '8rem' }}>
+                      <option
+                        selected={user?.isActiveAccount === true}
+                        value='Active'
+                        className='text-nowrap'
+                      >
+                        Active
+                      </option>
+                      <option
+                        selected={user?.isActiveAccount === false}
+                        value='Block'
+                        className='text-nowrap'
+                      >
+                        Block
+                      </option>
+                    </Select>
+                  </td>
+                  <td className='text-nowrap border p-2 text-center'>
+                    {user?.isBalanceRequest ? (
+                      <Tag>Requested</Tag>
+                    ) : (
+                      <Tag>None</Tag>
+                    )}
+                  </td>
+                  <td className='text-nowrap border p-2 text-center'>
+                    {user?.isWithdrawRequest ? (
+                      <Tag>Requested</Tag>
+                    ) : (
+                      <Tag>None</Tag>
+                    )}
+                  </td>
+                  <td className='text-nowrap border p-2 text-center'>
+                    <Tag style={{ background: '#FF0000' }}>Delete</Tag>
+                  </td>
+                </tr>
+              ))}
+          </>
+        ) : (
+          <>
+            {searchUsers?.map((user, index) => (
+              <tr key={index} className='transition-all hover:bg-green-50'>
+                <td className='text-nowrap border p-2'>{user?.name}</td>
+                <td className='text-nowrap border p-2'>{user?.email}</td>
+                <td className='text-nowrap border p-2'>{user?.role}</td>
+                <td className='text-nowrap border p-2'>{user?.phone}</td>
+                <td className='text-nowrap border p-2 text-center'>
+                  <Select style={{ minWidth: '8rem' }}>
+                    <option
+                      selected={user?.isActiveAccount === true}
+                      value='Active'
+                      className='text-nowrap'
+                    >
+                      Active
+                    </option>
+                    <option
+                      selected={user?.isActiveAccount === false}
+                      value='Block'
+                      className='text-nowrap'
+                    >
+                      Block
+                    </option>
+                  </Select>
+                </td>
+                <td className='text-nowrap border p-2 text-center'>
+                  {user?.isBalanceRequest ? (
+                    <Tag>Requested</Tag>
+                  ) : (
+                    <Tag>None</Tag>
+                  )}
+                </td>
+                <td className='text-nowrap border p-2 text-center'>
+                  {user?.isWithdrawRequest ? (
+                    <Tag>Requested</Tag>
+                  ) : (
+                    <Tag>None</Tag>
+                  )}
+                </td>
+                <td className='text-nowrap border p-2 text-center'>
+                  <Tag style={{ background: '#FF0000' }}>Delete</Tag>
+                </td>
+              </tr>
+            ))}
+          </>
         )}
       </tbody>
     </table>
   );
 };
-
+UserTable.propTypes = {
+  allUsers: PropTypes.array.isRequired,
+  isError: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  searchUsers: PropTypes.func.isRequired,
+};
 export default UserTable;

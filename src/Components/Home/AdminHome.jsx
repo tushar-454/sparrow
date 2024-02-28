@@ -1,11 +1,33 @@
+import { useQuery } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
-
+import { useState } from 'react';
+import useAxios from '../../Hook/useAxios';
 import GradientText from '../Shared/GradientText';
 import Input from '../UI/Input';
 import BalanceInformationCard from './BalanceInformationCard';
 import UserInformationCard from './UserInformationCard';
 import UserTable from './UserTable';
 const AdminHome = ({ user, account }) => {
+  const [searchUsers, setsearchUsers] = useState(null);
+  const axios = useAxios();
+  const {
+    data: allUsers,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ['allUsers'],
+    queryFn: async () => {
+      const res = await axios.get(`/admin/allUsers`);
+      return res.data.data;
+    },
+  });
+  // handle search user
+  const handleSearchUser = (e) => {
+    const search = e.target.value;
+    if (search === '') return setsearchUsers(null);
+    const searchUser = allUsers.filter((user) => user.phone.includes(search));
+    setsearchUsers(searchUser);
+  };
   return (
     <>
       {/* user information and user balance information wrapper will be here */}
@@ -28,11 +50,17 @@ const AdminHome = ({ user, account }) => {
           id={'search'}
           name='search'
           placeholder={'Search by phone number'}
+          onChange={handleSearchUser}
         />
       </div>
       <div className='w-full overflow-auto'>
         {/* admin user management table  */}
-        <UserTable />
+        <UserTable
+          allUsers={allUsers}
+          isError={isError}
+          isLoading={isLoading}
+          searchUsers={searchUsers}
+        />
       </div>
     </>
   );
