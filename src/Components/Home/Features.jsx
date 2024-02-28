@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Feature from './Feature';
 import ServicesModal from './ServicesModal';
 
-const Features = ({ title, features }) => {
+const Features = ({ title, features, accountRefetch }) => {
   const [selectedService, setSelectedService] = useState('');
   return (
     <div>
@@ -25,18 +25,21 @@ const Features = ({ title, features }) => {
           <ServicesModal
             service={'Send Money'}
             setSelectedService={setSelectedService}
+            accountRefetch={accountRefetch}
           />
         )}
         {selectedService === 'Cash Out' && (
           <ServicesModal
             service={'Cash Out'}
             setSelectedService={setSelectedService}
+            accountRefetch={accountRefetch}
           />
         )}
         {selectedService === 'Cash In' && (
           <ServicesModal
             service={'Cash In'}
             setSelectedService={setSelectedService}
+            accountRefetch={accountRefetch}
           />
         )}
       </div>
@@ -46,5 +49,6 @@ const Features = ({ title, features }) => {
 Features.propTypes = {
   title: PropTypes.string,
   features: PropTypes.array,
+  accountRefetch: PropTypes.func,
 };
 export default Features;

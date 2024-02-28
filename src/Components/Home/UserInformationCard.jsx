@@ -10,7 +10,6 @@ const UserInformationCard = ({ title, userInfo }) => {
       const res = await axios.patch(`/user/requestActive/${phone}`, {
         isRequestActiveAccount: true,
       });
-      console.log(res);
       toast.success(res.data.message);
     } catch (error) {
       toast.error(error.response.data.message ?? 'Request failed');

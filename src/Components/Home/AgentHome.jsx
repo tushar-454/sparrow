@@ -3,7 +3,7 @@ import { agentServices, paymentServices } from '../../Database/Services';
 import BalanceInformationCard from './BalanceInformationCard';
 import Features from './Features';
 import UserInformationCard from './UserInformationCard';
-const AgentHome = ({ user, account }) => {
+const AgentHome = ({ user, account, accountRefetch }) => {
   return (
     <>
       {/* user information and user balance information wrapper will be here */}
@@ -19,7 +19,11 @@ const AgentHome = ({ user, account }) => {
       </div>
       {/* feature link based on user role  */}
       <div className='w-full rounded-lg border border-apple-500 bg-apple-50 p-5'>
-        <Features title={'Services'} features={agentServices} />
+        <Features
+          title={'Services'}
+          features={agentServices}
+          accountRefetch={accountRefetch}
+        />
         <Features title={'Payments'} features={paymentServices} />
       </div>
     </>
@@ -28,5 +32,6 @@ const AgentHome = ({ user, account }) => {
 AgentHome.propTypes = {
   user: PropTypes.object,
   account: PropTypes.object,
+  accountRefetch: PropTypes.func,
 };
 export default AgentHome;

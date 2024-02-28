@@ -1,19 +1,65 @@
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { RxCross2 } from 'react-icons/rx';
+import useAuth from '../../Hook/useAuth';
+import useAxios from '../../Hook/useAxios';
 import { servicesError } from '../../Utils/Error';
 import GradientText from '../Shared/GradientText';
 import Button from '../UI/Button';
 import Input from '../UI/Input';
 
-const ServicesModal = ({ service, setSelectedService }) => {
+const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
+  const { loading, setLoading } = useAuth();
+  const axios = useAxios();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'all', resolver: servicesError });
-  const handleServiceRequest = (data) => {
-    console.log(data);
+  const handleServiceRequest = async (data) => {
+    try {
+      setLoading(true);
+      const { senderPhone, amount, receiverPhone, pin } = data;
+      // send money request
+      if (service === 'Send Money') {
+        const sendmoneyRes = await axios.patch(`/user/account/sendmoney`, {
+          phone: senderPhone,
+          amount,
+          receiverPhone,
+          pin,
+        });
+        toast.success(sendmoneyRes.data.message);
+        accountRefetch();
+      }
+      // cashOut request
+      if (service === 'Cash Out') {
+        const cashOutRes = await axios.patch(`/user/account/cashout`, {
+          agentPhone: receiverPhone,
+          amount,
+          phone: senderPhone,
+          pin,
+        });
+        toast.success(cashOutRes.data.message);
+        accountRefetch();
+      }
+      // cashIn request
+      if (service === 'Cash In') {
+        const cashInRes = await axios.patch(`/agent/cashIn`, {
+          phone: senderPhone,
+          amount,
+          receiverPhone,
+          pin,
+        });
+        toast.success(cashInRes.data.message);
+        accountRefetch();
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className='relative w-full rounded-lg border-2 border-apple-500 bg-white p-5 shadow-boxTransparentShadow sm:w-[640px]'>
@@ -61,7 +107,7 @@ const ServicesModal = ({ service, setSelectedService }) => {
           register={{ ...register('pin', { required: true }) }}
           error={errors.pin && errors.pin.message}
         />
-        <Button>Send Money</Button>
+        <Button loading={loading}>{loading ? 'Sending' : 'Send Money'}</Button>
       </form>
     </div>
   );
@@ -69,5 +115,6 @@ const ServicesModal = ({ service, setSelectedService }) => {
 ServicesModal.propTypes = {
   service: PropTypes.string,
   setSelectedService: PropTypes.func,
+  accountRefetch: PropTypes.func,
 };
 export default ServicesModal;

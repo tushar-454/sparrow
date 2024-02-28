@@ -1,10 +1,17 @@
 import PropTypes from 'prop-types';
+import toast from 'react-hot-toast';
 import sendmoney from '../../Assets/sendmoney.svg';
+import useAuth from '../../Hook/useAuth';
 
 const Feature = ({ feature, setSelectedService }) => {
+  const { userInfo } = useAuth();
   return (
     <div
       onClick={() => {
+        if (!userInfo?.isActiveAccount)
+          return toast.error(
+            'Your account is not active yet. Request for activation',
+          );
         window.scrollTo(0, 0);
         setSelectedService(feature?.name);
       }}

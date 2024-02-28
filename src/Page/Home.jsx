@@ -12,6 +12,7 @@ const Home = () => {
   const {
     data: account,
     isLoading,
+    refetch,
     isError,
   } = useQuery({
     queryKey: ['account'],
@@ -28,18 +29,21 @@ const Home = () => {
           <AdminHome
             user={userInfo}
             account={!isError && !isLoading && account}
+            accountRefetch={refetch}
           />
         )}
         {userInfo?.role === 'Customer' && (
           <CustomerHome
             user={userInfo}
             account={!isError && !isLoading && account}
+            accountRefetch={refetch}
           />
         )}
         {userInfo?.role === 'Agent' && (
           <AgentHome
             user={userInfo}
             account={!isError && !isLoading && account}
+            accountRefetch={refetch}
           />
         )}
       </Container>
