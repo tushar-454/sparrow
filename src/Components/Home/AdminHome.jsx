@@ -12,6 +12,7 @@ const AdminHome = ({ user, account }) => {
   const axios = useAxios();
   const {
     data: allUsers,
+    refetch,
     isError,
     isLoading,
   } = useQuery({
@@ -59,6 +60,7 @@ const AdminHome = ({ user, account }) => {
           allUsers={allUsers}
           isError={isError}
           isLoading={isLoading}
+          refetch={refetch}
           searchUsers={searchUsers}
         />
       </div>

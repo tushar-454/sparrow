@@ -1,6 +1,21 @@
 import PropTypes from 'prop-types';
+import toast from 'react-hot-toast';
+import useAxios from '../../Hook/useAxios';
 import Tag from '../UI/Tag';
 const UserInformationCard = ({ title, userInfo }) => {
+  const axios = useAxios();
+  // request for active account
+  const handleAccountActiveRequest = async (phone) => {
+    try {
+      const res = await axios.patch(`/user/requestActive/${phone}`, {
+        isRequestActiveAccount: true,
+      });
+      console.log(res);
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message ?? 'Request failed');
+    }
+  };
   return (
     <div className='w-full rounded-lg border border-apple-500 bg-apple-50 p-5 md:w-1/2'>
       <h2 className='mb-4 text-center text-xl font-bold text-jagger-950'>
@@ -28,12 +43,19 @@ const UserInformationCard = ({ title, userInfo }) => {
           </p>
         </div>
         <p className='mt-5 flex flex-col gap-2 sm:flex-row'>
-          <Tag>{userInfo?.isActiveAccount ? 'Activated' : 'Pending'}</Tag>
+          <Tag>{userInfo?.isActiveAccount ? 'Activated' : 'Block'}</Tag>
           <Tag>NID: {userInfo?.nidNo ?? '048348943533'}</Tag>
         </p>
         {userInfo?.isActiveAccount || (
-          <p className='mt-4'>
-            <Tag>Request for Active</Tag>
+          <p
+            onClick={() => handleAccountActiveRequest(userInfo?.phone)}
+            className='mt-4'
+          >
+            {userInfo?.isRequestActiveAccount ? (
+              <Tag>Requested</Tag>
+            ) : (
+              <Tag>Request for Active</Tag>
+            )}
           </p>
         )}
       </div>

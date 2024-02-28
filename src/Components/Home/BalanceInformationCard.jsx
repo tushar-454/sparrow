@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { PiCurrencyCircleDollarFill } from 'react-icons/pi';
 import useAuth from '../../Hook/useAuth';
+import useAxios from '../../Hook/useAxios';
 import Tag from '../UI/Tag';
 const initialBlur = {
   company: true,
@@ -11,6 +13,19 @@ const initialBlur = {
 const BalanceInformationCard = ({ title, accountInfo }) => {
   const [blur, setBlur] = useState({ ...initialBlur });
   const { userInfo } = useAuth();
+  const axios = useAxios();
+  // handle agent balance or withdraw request
+  const handleBalanceRequest = async (type) => {
+    try {
+      const res = await axios.patch(`/agent/requestAdmin`, {
+        phone: userInfo?.phone,
+        requestType: type,
+      });
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message ?? 'Request failed');
+    }
+  };
   return (
     <div
       onMouseLeave={() => setBlur({ ...initialBlur })}
@@ -111,11 +126,15 @@ const BalanceInformationCard = ({ title, accountInfo }) => {
           </p>
         </div>
       )}
-      {userInfo?.role === 'Agent' && (
+      {userInfo?.role === 'Agent' && userInfo?.isActiveAccount && (
         <div>
           <p className='mt-5 flex flex-col gap-2'>
-            <Tag>Request for Balance</Tag>
-            <Tag>Request for Withdraw</Tag>
+            <Tag onClick={() => handleBalanceRequest('isBalanceRequest')}>
+              Request for Balance
+            </Tag>
+            <Tag onClick={() => handleBalanceRequest('isWithdrawRequest')}>
+              Request for Withdraw
+            </Tag>
           </p>
         </div>
       )}

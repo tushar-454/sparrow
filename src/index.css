@@ -23,3 +23,15 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.animate-pulse::after {
+  background-color: red;
+  content: 'Request';
+  position: absolute;
+  padding: 2px 20px;
+  z-index: 9999;
+  border-radius: 100px;
+  top: -3px;
+  right: -1px;
+  color: white;
+}
