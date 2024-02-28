@@ -1,4 +1,27 @@
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../Hook/useAuth';
+import useAxios from '../../Hook/useAxios';
+
 const TransactionTable = () => {
+  const axios = useAxios();
+  const { userInfo } = useAuth();
+  const {
+    data: transactions,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['transactions'],
+    queryFn: async () => {
+      // if user admin then fetch all transactions
+      if (userInfo?.role === 'Admin') {
+        const res = await axios.get(`/transactions/all`);
+        return res.data.data;
+      }
+      const res = await axios.get(`/transactions/${userInfo?.phone}`);
+      return res.data.data;
+    },
+  });
+
   return (
     <table className='w-full'>
       <thead>
@@ -18,22 +41,38 @@ const TransactionTable = () => {
             Receiver Phone
           </th>
           <th className='text-nowrap border border-apple-400 p-2'>Time</th>
+          <th className='text-nowrap border border-apple-400 p-2'>
+            Reference/Note
+          </th>
         </tr>
       </thead>
       <tbody>
-        {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]?.map(
-          (user, index) => (
+        {!isError &&
+          !isLoading &&
+          transactions?.map((transaction, index) => (
             <tr key={index} className='transition-all hover:bg-green-50'>
-              <td className='text-nowrap border p-2'>John Doe</td>
-              <td className='text-nowrap border p-2'>+03493054</td>
-              <td className='text-nowrap border p-2'>23400</td>
-              <td className='text-nowrap border p-2'>CashIn</td>
-              <td className='text-nowrap border p-2'>Er Eps</td>
-              <td className='text-nowrap border p-2'>+03493054</td>
-              <td className='text-nowrap border p-2'>12-12-2021 12:12:12</td>
+              <td className='text-nowrap border p-2'>
+                {transaction?.senderName}
+              </td>
+              <td className='text-nowrap border p-2'>
+                {transaction?.senderNumber}
+              </td>
+              <td className='text-nowrap border p-2'>{transaction?.amount}</td>
+              <td className='text-nowrap border p-2'>{transaction?.type}</td>
+              <td className='text-nowrap border p-2'>
+                {transaction?.receiverName}
+              </td>
+              <td className='text-nowrap border p-2'>
+                {transaction?.receiverNumber}
+              </td>
+              <td className='text-nowrap border p-2'>
+                {new Date(transaction?.time).toLocaleString()}
+              </td>
+              <td className='text-nowrap border p-2'>
+                {transaction?.wishText ?? 'No note'}
+              </td>
             </tr>
-          ),
-        )}
+          ))}
       </tbody>
     </table>
   );

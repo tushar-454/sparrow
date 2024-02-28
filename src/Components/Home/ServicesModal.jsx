@@ -11,16 +11,21 @@ import Input from '../UI/Input';
 
 const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
   const { loading, setLoading } = useAuth();
+  const { userInfo } = useAuth();
   const axios = useAxios();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: 'all', resolver: servicesError });
+  } = useForm({
+    mode: 'all',
+    resolver: servicesError,
+    defaultValues: { senderPhone: userInfo?.phone },
+  });
   const handleServiceRequest = async (data) => {
     try {
       setLoading(true);
-      const { senderPhone, amount, receiverPhone, pin } = data;
+      const { senderPhone, amount, receiverPhone, note, pin } = data;
       // send money request
       if (service === 'Send Money') {
         const sendmoneyRes = await axios.patch(`/user/account/sendmoney`, {
@@ -31,6 +36,17 @@ const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
         });
         toast.success(sendmoneyRes.data.message);
         accountRefetch();
+        // create transaction
+        await axios.post(`/transactions/create`, {
+          type: 'Send Money',
+          amount: amount,
+          senderName: userInfo?.name,
+          senderNumber: senderPhone,
+          receiverName: sendmoneyRes.data.receiverName,
+          receiverNumber: receiverPhone,
+          time: new Date(),
+          wishText: note,
+        });
       }
       // cashOut request
       if (service === 'Cash Out') {
@@ -42,6 +58,17 @@ const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
         });
         toast.success(cashOutRes.data.message);
         accountRefetch();
+        // create transaction
+        await axios.post(`/transactions/create`, {
+          type: 'Cash Out',
+          amount: amount,
+          senderName: userInfo?.name,
+          senderNumber: senderPhone,
+          receiverName: cashOutRes.data.agentName,
+          receiverNumber: receiverPhone,
+          time: new Date(),
+          wishText: note,
+        });
       }
       // cashIn request
       if (service === 'Cash In') {
@@ -53,6 +80,16 @@ const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
         });
         toast.success(cashInRes.data.message);
         accountRefetch();
+        await axios.post(`/transactions/create`, {
+          type: 'Cash In',
+          amount: amount,
+          senderName: userInfo?.name,
+          senderNumber: senderPhone,
+          receiverName: cashInRes.data.receiverName,
+          receiverNumber: receiverPhone,
+          time: new Date(),
+          wishText: note,
+        });
       }
     } catch (error) {
       setLoading(false);
@@ -79,6 +116,7 @@ const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
           placeholder={'Enter your phone number'}
           register={{ ...register('senderPhone', { required: true }) }}
           error={errors.senderPhone && errors.senderPhone.message}
+          disabled
         />
         <Input
           displayName={'Amount:'}
@@ -106,6 +144,14 @@ const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
           placeholder={'Enter your 5 digit pin'}
           register={{ ...register('pin', { required: true }) }}
           error={errors.pin && errors.pin.message}
+        />
+        <Input
+          displayName={'Reference/Note:'}
+          type={'text'}
+          name={'note'}
+          id={'note'}
+          placeholder={'Enter your reference or note'}
+          register={{ ...register('note') }}
         />
         <Button loading={loading}>{loading ? 'Sending' : 'Send Money'}</Button>
       </form>
