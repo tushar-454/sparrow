@@ -153,7 +153,7 @@ const ServicesModal = ({ service, setSelectedService, accountRefetch }) => {
           placeholder={'Enter your reference or note'}
           register={{ ...register('note') }}
         />
-        <Button loading={loading}>{loading ? 'Sending' : 'Send Money'}</Button>
+        <Button loading={loading} disabled={loading ? true : false}>{loading ? 'Sending' : 'Send Money'}</Button>
       </form>
     </div>
   );

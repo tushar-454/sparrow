@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
     setLoading,
   };
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem('userInfo'));
+    const user = JSON.parse(localStorage.getItem('userInfo'));
     if (user) {
       setUserInfo(user);
     } else {

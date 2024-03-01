@@ -21,7 +21,7 @@ const Header = () => {
             <div className='absolute right-0 top-4 block md:hidden'>
               <HiOutlineMenu
                 onClick={() => setShowNav(true)}
-                className='text-6xl text-white'
+                className='text-6xl text-white cursor-pointer'
               />
             </div>
           )}

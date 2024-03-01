@@ -161,7 +161,7 @@ const Register = () => {
                 }}
                 error={errors.terms && toast.error(errors.terms.message)}
               />
-              <Button loading={loading}>
+              <Button loading={loading} disabled={loading ? true : false}>
                 {loading ? 'Creating...' : 'Create an account'}
               </Button>
             </form>

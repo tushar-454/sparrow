@@ -37,7 +37,7 @@ const Login = () => {
       });
       if (loginRes.data.success) {
         setUserInfo(loginRes.data.data);
-        sessionStorage.setItem('userInfo', JSON.stringify(loginRes.data.data));
+        localStorage.setItem('userInfo', JSON.stringify(loginRes.data.data));
         toast.success(loginRes.data.message);
       } else {
         toast.error(loginRes.data.message);
@@ -102,7 +102,7 @@ const Login = () => {
                 }}
                 error={errors.pin && errors.pin.message}
               />
-              <Button loading={loading}>
+              <Button loading={loading} disabled={loading ? true : false}>
                 {loading ? 'Logging...' : 'Login account'}
               </Button>
             </form>
