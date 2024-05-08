@@ -15,7 +15,7 @@ const UserInfo = () => {
     await axios.patch(`/user/updateUserOneDeviceLogin/${userInfo.phone}`, {
       isOneDeviceLoggedIn: false,
     });
-    sessionStorage.clear();
+    localStorage.clear();
     // token remove request
     await axios.post('/jwt/remove');
     toast.success('Logout successfully');
